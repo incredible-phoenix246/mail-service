@@ -2,18 +2,29 @@ import nodemailer, { Transporter, SentMessageInfo } from "nodemailer";
 import { BadRequestError } from "../middlewares";
 import "dotenv/config";
 
-const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
+const { SMTP_EMAIL, SMTP_PASSWORD, MRGRACE_SMTP_PASSWORD, MRGRACE_SMTP_EMAIL } =
+  process.env;
 
 const transporters: Record<string, Transporter<SentMessageInfo>> = {
   // list of all availalbe transporters
   ODS: nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     auth: {
       user: SMTP_EMAIL,
       pass: SMTP_PASSWORD,
+    },
+  }),
+  Mr_Grace: nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: MRGRACE_SMTP_EMAIL,
+      pass: MRGRACE_SMTP_PASSWORD,
     },
   }),
 };
@@ -21,7 +32,6 @@ const transporters: Record<string, Transporter<SentMessageInfo>> = {
 const sendEmail = async (emailContent: any, transporterName: string) => {
   try {
     // Get the transporter based on the name provided
-    console.log({ email: SMTP_EMAIL, password: SMTP_PASSWORD });
     const transporter = transporters[transporterName];
 
     if (!transporter) {

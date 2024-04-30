@@ -1,7 +1,6 @@
 import { sendEmail } from "../services/mailer";
 import { compileOrder } from "../compiler/order";
 import { RequestHandler } from "express";
-import { BadRequestError } from "../middlewares";
 
 const Sendorder: RequestHandler = async (req, res, next) => {
   try {
@@ -9,7 +8,7 @@ const Sendorder: RequestHandler = async (req, res, next) => {
     const odsLink = process.env.ODSLINK;
     await sendEmail(
       {
-        from: "OGUN DIGITAL SUMMIT 24",
+        from: `OGUN DIGITAL SUMMIT 24 <order@ogundigitalsummit.com>`,
         to: email,
         subject: "Order Confirmation",
         html: compileOrder(name, odsLink),
