@@ -1,0 +1,7 @@
+variables for blog post
+
+imageurl,
+posttittle,
+desc,
+blogurl
+name,

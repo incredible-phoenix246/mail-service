@@ -16,12 +16,11 @@ const Sendorder: RequestHandler = async (req, res, next) => {
     await sendEmail(
       {
         from: "OGUN DIGITAL SUMMIT 24",
-
+        to,
         subject: "Order Confirmation",
         html: compileOrder(name, odsLink),
       },
-      "ODS",
-      to
+      "ODS"
     );
     res.status(200).json({ message: "Email sent successfully." });
   } catch (error) {

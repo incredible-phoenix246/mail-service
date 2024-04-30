@@ -8,6 +8,9 @@ const transporters: Record<string, Transporter<SentMessageInfo>> = {
   // list of all availalbe transporters
   ODS: nodemailer.createTransport({
     service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: SMTP_EMAIL,
       pass: SMTP_PASSWORD,
@@ -15,11 +18,7 @@ const transporters: Record<string, Transporter<SentMessageInfo>> = {
   }),
 };
 
-const sendEmail = async (
-  emailContent: any,
-  transporterName: string,
-  reciepients: string
-) => {
+const sendEmail = async (emailContent: any, transporterName: string) => {
   try {
     // Get the transporter based on the name provided
     console.log({ email: SMTP_EMAIL, password: SMTP_PASSWORD });
@@ -31,9 +30,7 @@ const sendEmail = async (
       );
     }
 
-    await transporter.sendMail({
-      to: reciepients,
-    });
+    await transporter.sendMail(emailContent);
     console.log("Email sent successfully.");
     return { message: "Email sent successfully." };
   } catch (error) {
