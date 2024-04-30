@@ -5,18 +5,12 @@ import { BadRequestError } from "../middlewares";
 
 const Sendorder: RequestHandler = async (req, res, next) => {
   try {
-    const { to, name } = req.body;
+    const { email, name } = req.body;
     const odsLink = process.env.ODSLINK;
-    // const finalemail = {
-    //   from: "OGUN DIGITAL SUMMIT 24",
-    //   to,
-    //   subject: "Order Confirmation",
-    //   html: compileOrder(name, odsLink),
-    // };
     await sendEmail(
       {
         from: "OGUN DIGITAL SUMMIT 24",
-        to,
+        to: email,
         subject: "Order Confirmation",
         html: compileOrder(name, odsLink),
       },
@@ -25,7 +19,7 @@ const Sendorder: RequestHandler = async (req, res, next) => {
     res.status(200).json({ message: "Email sent successfully." });
   } catch (error) {
     console.error("Error in email middleware:", error.message);
-    throw new BadRequestError("Error sending email");
+    res.status(500).json({ error: "Error sending email" });
   }
 };
 
