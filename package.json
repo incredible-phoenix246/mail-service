@@ -1,11 +1,10 @@
 {
   "name": "evento",
   "version": "1.0.0",
-  "description": "## Installation",
-  "main": "app.ts",
+  "description": "mail service for all my email activity",
+  "main": "./src/app.ts",
   "scripts": {
-    "start:dev": "ts-node-dev --respawn --transpile-only ./src/app",
-    "start": "node ./build/app.js"
+    "start:dev": "ts-node-dev --respawn --transpile-only ./src/app"
   },
   "keywords": [],
   "author": "",

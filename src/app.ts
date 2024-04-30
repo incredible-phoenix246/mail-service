@@ -4,6 +4,7 @@ import { errorHandler } from "./middlewares";
 import cors from "cors";
 import https from "https";
 import cron from "node-cron";
+import { sayHelloController } from "./controllers";
 
 const app = express();
 
@@ -22,7 +23,7 @@ function keepAlive(url) {
 
 // cron job to ping the server every minute and delete expired tokens every 5 minutes
 cron.schedule("*/5 * * * *", () => {
-  keepAlive("https://evento-qo6d.onrender.com/");
+  keepAlive("https://mail-service-1omd.onrender.com");
   console.log("pinging the server every minute");
 });
 
@@ -30,6 +31,8 @@ cron.schedule("*/5 * * * *", () => {
 readdirSync("./src/routes").map((path) =>
   app.use("/api/v1", require(`./routes/${path}`))
 );
+
+app.get("/", sayHelloController);
 
 app.use(errorHandler);
 app.use(cors());
