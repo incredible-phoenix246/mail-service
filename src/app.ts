@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-function keepAlive(url) {
+function keepAlive(url: string) {
   https
     .get(url, (res) => {
       console.log(`Status: ${res.statusCode}`);
@@ -35,6 +35,7 @@ readdirSync("./src/routes").map((path) =>
 app.get("/", sayHelloController);
 
 app.use(errorHandler);
+
 app.use(cors());
 const port = process.env.PORT || 3000;
 
