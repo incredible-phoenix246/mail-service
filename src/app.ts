@@ -28,6 +28,11 @@ cron.schedule("*/5 * * * *", () => {
   console.log("pinging the server every minute");
 });
 
+cron.schedule("*/5 * * * *", () => {
+  keepAlive("https://hngone-ilnp.onrender.com");
+  console.log("pinging the server every minute");
+});
+
 //serve all routes dynamically using readdirsync
 readdirSync("./src/routes").map((path) =>
   app.use("/api", require(`./routes/${path}`))
