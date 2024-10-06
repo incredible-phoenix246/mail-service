@@ -3,6 +3,7 @@ import { compileOrder } from "../compiler/order";
 import { compileSub } from "../compiler/sub";
 import { compilerOtp, welcome } from "../compiler/welcome";
 import { RequestHandler } from "express";
+import { compilerWcf } from "../compiler/wcf";
 
 const Sendorder: RequestHandler = async (req, res, next) => {
   try {
@@ -62,4 +63,24 @@ const SendOtp: RequestHandler = async (req, res, next) => {
   }
 };
 
-export { Sendorder, SendSubscribe, SendOtp };
+
+const sendWcfOtp: RequestHandler = async (req, res, next) => {
+  try {
+    const { name, email, otp } = req.body;
+    await sendEmail(
+      {
+        from: `WELCOME TO WCF <welcome@wcf.com>`,
+        to: email,
+        subject: "Verify your email",
+        html: compilerWcf(parseInt(otp), name),
+      },
+      "ODS"
+    );
+    res.status(200).json({ message: "Email sent successfully." });
+  } catch (error) {
+    console.error("Error in email middleware:", error.message);
+    res.status(500).json({ error: "Error sending email" });
+  }
+};
+
+export { Sendorder, SendSubscribe, SendOtp, sendWcfOtp };
