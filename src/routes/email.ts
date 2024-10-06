@@ -13,4 +13,4 @@ router.post("/mrgrace/sub", SendSubscribe);
 router.post("/devlink/sendotp", SendOtp);
 router.post("/wcf/welcome", sendWcfOtp);
 
-module.exports = router;
+export default router

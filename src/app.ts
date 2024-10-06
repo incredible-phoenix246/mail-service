@@ -1,11 +1,10 @@
 import express from "express";
-import { readdirSync } from "fs";
-
 import cors from "cors";
 import https from "https";
 import cron from "node-cron";
 import { sayHelloController } from "./controllers";
 import { errorHandler } from "./middlewares";
+import router from "./routes/email";
 
 const app = express();
 
@@ -30,9 +29,11 @@ cron.schedule("*/5 * * * *", () => {
 
 
 //serve all routes dynamically using readdirsync
-readdirSync("./src/routes").map((path) =>
-  app.use("/api", require(`./routes/${path}`))
-);
+// readdirSync("./src/routes").map((path) =>
+//   app.use("/api", require(`./routes/${path}`))
+// );
+
+app.use("/api", router);
 
 app.get("/", sayHelloController);
 
