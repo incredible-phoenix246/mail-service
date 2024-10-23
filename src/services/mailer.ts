@@ -2,7 +2,7 @@ import nodemailer, { Transporter, SentMessageInfo } from "nodemailer";
 import { BadRequestError } from "../middlewares";
 import "dotenv/config";
 
-const { SMTP_EMAIL, SMTP_PASSWORD, MRGRACE_SMTP_PASSWORD, MRGRACE_SMTP_EMAIL } =
+const { SMTP_EMAIL, SMTP_PASSWORD, MRGRACE_SMTP_PASSWORD, MRGRACE_SMTP_EMAIL, WCF_SMTP_EMAIL, WCF_SMTP_PASSWORD } =
   process.env;
 
 const transporters: Record<string, Transporter<SentMessageInfo>> = {
@@ -27,11 +27,21 @@ const transporters: Record<string, Transporter<SentMessageInfo>> = {
       pass: MRGRACE_SMTP_PASSWORD,
     },
   }),
+  WCF: nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: WCF_SMTP_EMAIL,
+      pass: WCF_SMTP_PASSWORD,
+    },
+  }),
 };
 
 const sendEmail = async (emailContent: any, transporterName: string) => {
   try {
-    // Get the transporter based on the name provided
+
     const transporter = transporters[transporterName];
 
     if (!transporter) {

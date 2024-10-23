@@ -74,7 +74,7 @@ const sendWcfOtp: RequestHandler = async (req, res, next) => {
         subject: "Verify your email",
         html: compilerWcf(parseInt(otp), name),
       },
-      "ODS"
+      "WCF"
     );
     res.status(200).json({ message: "Email sent successfully." });
   } catch (error) {
